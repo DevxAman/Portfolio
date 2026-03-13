@@ -234,11 +234,9 @@ You can also give this repository a star to show more people and they can use th
 
 ## :star2: Star History
 
-<a href="https://star-history.com/#sanidhyy/3d-portfolio&Timeline">
+<a href="https://star-history.com/#DevxAman/Portfolio&Timeline">
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=DevxAman/portfolio&type=Timeline&theme=dark" />
-  <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=DevxAman/portfolio&type=Timeline" />
-  <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=DevxAman/portfolio&type=Timeline" />
+  <iframe style="width:100%;height:auto;min-width:600px;min-height:400px;" src="https://www.star-history.com/?repos=DevxAman%2FPortfolio&type=timeline&legend=top-left" frameBorder="0"></iframe>
 </picture>
 </a>
 
