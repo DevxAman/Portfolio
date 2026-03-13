@@ -232,13 +232,5 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 You can also give this repository a star to show more people and they can use this repository.
 
-## :star2: Star History
-
-<a href="https://star-history.com/#DevxAman/Portfolio&Timeline">
-<picture>
-  <iframe style="width:100%;height:auto;min-width:600px;min-height:400px;" src="https://www.star-history.com/?repos=DevxAman%2FPortfolio&type=timeline&legend=top-left" frameBorder="0"></iframe>
-</picture>
-</a>
-
 <br />
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
