@@ -18,6 +18,10 @@ dist-ssr
 # Environment Variables
 .env
 
+# Agent Artifacts
+.agents/
+.gemini/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

@@ -1,5 +1,6 @@
 import { Tilt } from "react-tilt";
 import { motion } from "framer-motion";
+import CpuArchitecture from "./ui/cpu-architecture";
 
 import { SERVICES } from "../constants";
 import { SectionWrapper } from "../hoc";
@@ -49,17 +50,25 @@ export const About = () => {
           <h2 className={styles.sectionHeadText}>Overview.</h2>
         </motion.div>
 
-        {/* Body */}
-        <motion.p
-          variants={fadeIn(undefined, undefined, 0.1, 1)}
-          className="empty-4 text-secondary text-[17px] max-w-3xl leading-[30px]"
-        >
-          I'm a skilled website developer with experience in TypeScript and
-          Javascript, and expertise in frameworks like React, Node.js, and
-          Three.js. I'm a quick learner and collaborate closely with clients to
-          create efficient, scalable, and user-friendly solutions that solve
-          real-world problems. Let's work together to bring your ideas to life!
-        </motion.p>
+        <div className="flex flex-col md:flex-row gap-10">
+          <div className="w-full md:w-1/2 flex flex-col justify-center">
+            {/* Body */}
+            <motion.p
+              variants={fadeIn(undefined, undefined, 0.1, 1)}
+              className="mt-4 text-secondary text-[17px] leading-[30px]"
+            >
+              I am an AI and Data Systems Engineer specializing in machine learning research, data engineering,
+              and robust analytical infrastructure. With foundational experience analyzing multidimensional
+              defence datasets during my tenure with the DRDO, I build and deploy intelligent software,
+              data pipeline architectures, and intelligent backend operations. My technical work resides
+              at the intersection between backend distributed systems and deep computational models, transforming
+              high-density unstructured information into structured, scalable technological operations.
+            </motion.p>
+          </div>
+          <div className="w-full md:w-1/2 min-h-[300px] flex items-center justify-center rounded-2xl border border-white/10 bg-black-200/50 p-4">
+            <CpuArchitecture />
+          </div>
+        </div>
 
         {/* Service Card */}
         <div className="mt-20 flex flex-wrap gap-10">

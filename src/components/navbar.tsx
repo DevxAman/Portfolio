@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
 import { logo, menu, close } from "../assets";
 import { NAV_LINKS } from "../constants";
@@ -35,7 +36,8 @@ export const Navbar = ({ hide }: NavbarProps) => {
     <nav
       className={cn(
         styles.paddingX,
-        "w-full flex items-center py-5 fixed top-0 z-20 bg-primary",
+        "w-full flex items-center py-5 fixed top-0 z-50 transition-all duration-300",
+        isAtBottom ? "bg-primary/90 backdrop-blur-md" : "bg-transparent",
         isAtBottom || hide ? "mt-0" : "mt-20"
       )}
     >
@@ -49,36 +51,57 @@ export const Navbar = ({ hide }: NavbarProps) => {
             window.scrollTo(0, 0);
           }}
         >
-          <img src={logo} alt="Logo" className="w-9 h-9 object-contain" />
+          <img src={logo} alt="Logo" className="w-10 h-10 object-contain bg-white rounded-full p-1" />
           <p className="text-white text-[18px] font-bold cursor-pointer flex">
-            Shubham&nbsp;<span className="sm:block hidden">| Developer</span>
+            Amandeep Singh
           </p>
         </Link>
 
         {/* Nav Links (Desktop) */}
-        <ul className="list-none hidden sm:flex flex-row gap-10">
-          {NAV_LINKS.map((link) => (
-            <li
-              key={link.id}
-              className={cn(
-                active === link.title ? "text-white" : "text-secondary",
-                "hover:text-white text-[18px] font-medium cursor-pointer"
-              )}
-              onClick={() => !link.link && setActive(link.title)}
-            >
-              {link.link ? (
-                <a href={link.link} target="_blank" rel="noreferrer noopener">
-                  {link.title}
-                </a>
-              ) : (
-                <a href={`#${link.id}`}>{link.title}</a>
-              )}
-            </li>
-          ))}
+        <ul className="list-none hidden lg:flex flex-row gap-2">
+          {NAV_LINKS.map((link) => {
+            const isActive = active === link.title;
+            return (
+              <li
+                key={link.id}
+                className={cn(
+                  isActive ? "text-white" : "text-secondary",
+                  "relative hover:text-white text-[16px] font-medium cursor-pointer px-4 py-2 rounded-full transition-colors"
+                )}
+                onClick={() => !link.link && setActive(link.title)}
+              >
+                {link.link ? (
+                  <a href={link.link} target="_blank" rel="noreferrer noopener" className="relative z-10">
+                    {link.title}
+                  </a>
+                ) : (
+                  <a href={`#${link.id}`} className="relative z-10">{link.title}</a>
+                )}
+                {isActive && (
+                  <motion.div
+                    layoutId="lamp"
+                    className="absolute inset-0 w-full bg-[#915eff]/5 rounded-full -z-10"
+                    initial={false}
+                    transition={{
+                      type: "spring",
+                      stiffness: 300,
+                      damping: 30,
+                    }}
+                  >
+                    <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-8 h-1 bg-[#915eff] rounded-t-full">
+                      <div className="absolute w-12 h-6 bg-[#915eff]/20 rounded-full blur-md -top-2 -left-2" />
+                      <div className="absolute w-8 h-6 bg-[#915eff]/20 rounded-full blur-md -top-1" />
+                      <div className="absolute w-4 h-4 bg-[#915eff]/20 rounded-full blur-sm top-0 left-2" />
+                    </div>
+                  </motion.div>
+                )}
+              </li>
+            );
+          })}
         </ul>
 
         {/* Hamburger Menu (Mobile) */}
-        <div className="sm:hidden flex flex-1 justify-end items-center">
+        <div className="lg:hidden flex flex-1 justify-end items-center">
           <img
             src={toggle ? close : menu}
             alt="Menu"

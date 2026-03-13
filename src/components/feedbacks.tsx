@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 
-import { TESTIMONIALS } from "../constants";
+import { ACHIEVEMENTS } from "../constants";
 import { SectionWrapper } from "../hoc";
 import { styles } from "../styles";
 import { cn } from "../utils/lib";
@@ -15,8 +15,8 @@ type FeedbackCardProps = {
   image: string;
 };
 
-// Feedback Card
-const FeedbackCard = ({
+// Achievement Card
+const AchievementCard = ({
   index,
   testimonial,
   name,
@@ -25,7 +25,7 @@ const FeedbackCard = ({
   image,
 }: FeedbackCardProps) => (
   <motion.div
-    variants={fadeIn("", "spring", index * 0.5, 0.75)}
+    variants={fadeIn(undefined, "spring", index * 0.5, 0.75)}
     className="bg-black-200 p-10 rounded-3xl xs:w-[320px] w-full"
   >
     {/* Quote " */}
@@ -60,7 +60,7 @@ const FeedbackCard = ({
 // Feedbacks
 export const Feedbacks = () => {
   return (
-    <SectionWrapper>
+    <SectionWrapper idName="achievements">
       <div className="mt-12 bg-black-100 rounded-[20px]">
         <div
           className={cn(
@@ -70,8 +70,8 @@ export const Feedbacks = () => {
         >
           {/* Title */}
           <motion.div variants={textVariant()}>
-            <p className={styles.sectionSubText}>What others say</p>
-            <h2 className={styles.sectionHeadText}>Testimonials.</h2>
+            <p className={styles.sectionSubText}>Record of Excellence</p>
+            <h2 className={styles.sectionHeadText}>Achievements.</h2>
           </motion.div>
         </div>
 
@@ -79,8 +79,8 @@ export const Feedbacks = () => {
         <div
           className={cn(styles.paddingX, "-mt-20 pb-14 flex flex-wrap gap-7")}
         >
-          {TESTIMONIALS.map((testimonial, i) => (
-            <FeedbackCard key={testimonial.name} index={i} {...testimonial} />
+          {ACHIEVEMENTS.map((achievement, i) => (
+            <AchievementCard key={achievement.name} index={i} {...achievement} />
           ))}
         </div>
       </div>

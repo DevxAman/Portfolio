@@ -3,9 +3,9 @@
   "version": "1.2.0",
   "private": true,
   "author": {
-    "name": "Sanidhya Kumar Verma",
-    "email": "sanidhya.verma12345@gmail.com",
-    "url": "https://github.com/sanidhyy"
+    "name": "Amandeep Singh",
+    "email": "DevxAman@gmail.com",
+    "url": "https://github.com/DevxAman"
   },
   "description": "Modern 3D Portfolio using React, Three.js and Typescript",
   "keywords": [
@@ -23,9 +23,9 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/sanidhyy/3d-portfolio.git"
+    "url": "https://github.com/DevxAman/3d-portfolio.git"
   },
-  "homepage": "https://github.com/sanidhyy/3d-portfolio#readme",
+  "homepage": "https://github.com/DevxAman/3d-portfolio#readme",
   "bugs": {
     "url": "https://github.com/sanidhyy/3d-portfolio/issues",
     "email": "sanidhya.verma12345@gmail.com"

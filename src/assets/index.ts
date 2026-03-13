@@ -5,7 +5,7 @@ import backend from "./backend.png";
 import bulb from "./bulb.svg";
 import close from "./close.svg";
 import creator from "./creator.png";
-import logo from "./logo.svg";
+import logo from "./logo.png";
 import menu from "./menu.svg";
 import mobile from "./mobile.png";
 import preview from "./preview.png";
@@ -25,9 +25,10 @@ import tailwind from "./tech/tailwind.png";
 import threejs from "./tech/threejs.svg";
 import typescript from "./tech/typescript.png";
 
+import drdo from "./company/drdo.png";
 import meta from "./company/meta.png";
 import shopify from "./company/shopify.png";
-import starbucks from "./company/starbucks.png";
+// import starbucks from "./company/starbucks.png";
 import tesla from "./company/tesla.png";
 
 import project1 from "./projects/project1.png";
@@ -69,9 +70,9 @@ export {
   tailwind,
   typescript,
   threejs,
+  drdo,
   meta,
   shopify,
-  starbucks,
   tesla,
   project1,
   project2,
