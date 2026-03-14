@@ -2,12 +2,12 @@
 
 # Modern 3D Portfolio using React, Three.js and Typescript
 
-![Modern 3D Portfolio using React, Three.js and Typescript](/.github/images/img_main.png "Modern 3D Portfolio using React, Three.js and Typescript")
-
+![Portfolio using React, Three.js and Typescript](/.github/images/img_main.png "Modern 3D Portfolio using React, Three.js and Typescript")
+![Portfolio DevxAman](https://devxaman-portfolio.netlify.app/) 
 [![Ask Me Anything!](https://flat.badgen.net/static/Ask%20me/anything?icon=github&color=black&scale=1.01)](https://github.com/DevxAman "Ask Me Anything!")
 [![GitHub license](https://flat.badgen.net/github/license/sanidhyy/3d-portfolio?icon=github&color=black&scale=1.01)](https://github.com/DevxAman/Portfolio/blob/main/LICENSE.md "GitHub license")
 [![GitHub branches](https://flat.badgen.net/github/branches/sanidhyy/3d-portfolio?icon=github&color=black&scale=1.01)](https://github.com/sanidhyy/3d-portfolio/branches "GitHub branches")
-[![Netlify status](https://api.netlify.com/api/v1/badges/5c77ba92-e2f5-468e-99f1-3543906a90cb/deploy-status)](https://devxaman-portfolio.netlify.app/ "Vercel status")
+[![Netlify status](https://api.netlify.com/api/v1/badges/5c77ba92-e2f5-468e-99f1-3543906a90cb/deploy-status)](https://devxaman-portfolio.netlify.app/ "Netlify status")
 
 <!-- Table of Contents -->
 <details>
