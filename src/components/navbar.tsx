@@ -25,12 +25,38 @@ export const Navbar = ({ hide }: NavbarProps) => {
       } else {
         setIsAtBottom(false);
       }
+
+      // Scroll Spy Logic
+      const scrollPosition = window.scrollY;
+      
+      // Reset active when at the very top (Hero section)
+      if (scrollPosition < 200) {
+        setActive("");
+        return;
+      }
+
+      for (let i = NAV_LINKS.length - 1; i >= 0; i--) {
+        const link = NAV_LINKS[i];
+        if (!link.link) {
+          const section = document.getElementById(link.id);
+          if (section) {
+            const rect = section.getBoundingClientRect();
+            // If the section's top is within the upper part of the viewport
+            if (rect.top <= 300) {
+              if (active !== link.title) {
+                setActive(link.title);
+              }
+              break;
+            }
+          }
+        }
+      }
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
 
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [active]);
 
   return (
     <nav

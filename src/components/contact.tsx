@@ -98,12 +98,14 @@ export const Contact = () => {
         import.meta.env.VITE_APP_TEMPLATE_ID,
         {
           from_name: form.name,
-          to_name: "Shubham",
+          to_name: "Amandeep Singh",
           from_email: form.email.trim().toLowerCase(),
           to_email: import.meta.env.VITE_APP_EMAILJS_RECIEVER,
           message: form.message,
         },
-        import.meta.env.VITE_APP_EMAILJS_KEY,
+        {
+          publicKey: import.meta.env.VITE_APP_EMAILJS_KEY,
+        }
       )
       .then(() => toast.success("Thanks for contacting me."))
       .catch((error) => {
@@ -123,14 +125,14 @@ export const Contact = () => {
 
   return (
     <SectionWrapper idName="contact">
-      <div className="xl:mt-12 xl:flex-row flex-col-reverse flex gap-10 overflow-hidden">
+      <div className="xl:mt-12 xl:flex-row flex-col-reverse flex gap-10">
         <motion.div
           variants={slideIn("left", "tween", 0.2, 1)}
           className="flex-[0.75] bg-black-100 p-8 rounded-2xl"
         >
           {/* Title */}
           <p className={styles.sectionSubText}>Get in touch</p>
-          <h3 className={styles.sectionHeadText}>Contact.</h3>
+          <h3 className={styles.sectionHeadText}>Contact</h3>
 
           {/* Form */}
           <form
