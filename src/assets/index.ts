@@ -26,10 +26,9 @@ import threejs from "./tech/threejs.svg";
 import typescript from "./tech/typescript.png";
 
 import drdo from "./company/drdo.png";
-import meta from "./company/meta.png";
-import shopify from "./company/shopify.png";
+import plasmid from "./company/plasmid.png";
+import technohacks from "./company/technohacks.png";
 // import starbucks from "./company/starbucks.png";
-import tesla from "./company/tesla.png";
 
 import project1 from "./projects/project1.png";
 import project2 from "./projects/project2.png";
@@ -71,9 +70,8 @@ export {
   typescript,
   threejs,
   drdo,
-  meta,
-  shopify,
-  tesla,
+  plasmid,
+  technohacks,
   project1,
   project2,
   project3,

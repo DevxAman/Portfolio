@@ -18,10 +18,9 @@ import {
   git,
   figma,
   docker,
-  meta,
+  plasmid,
   drdo,
-  tesla,
-  shopify,
+  technohacks,
   threejs,
   project1,
   project2,
@@ -181,7 +180,7 @@ export const EXPERIENCES = [
   {
     title: "Data Analytics Intern",
     company_name: "TechnoHacks Solutions",
-    icon: shopify,
+    icon: technohacks,
     iconBg: "#E6DEDD",
     date: "November 2025 - December 2025",
     points: [
@@ -193,7 +192,7 @@ export const EXPERIENCES = [
   {
     title: "Data Analytics & Software Intern",
     company_name: "Plasmid",
-    icon: meta,
+    icon: plasmid,
     iconBg: "#383E56",
     date: "May 2025 - July 2025",
     points: [
