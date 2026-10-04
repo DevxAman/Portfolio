@@ -25,15 +25,15 @@ const AchievementCard = ({
   image,
 }: FeedbackCardProps) => (
   <motion.div
-    variants={fadeIn(undefined, "spring", index * 0.5, 0.75)}
-    className="bg-black-200 p-10 rounded-3xl xs:w-[320px] w-full"
+    variants={fadeIn("up", "tween", index * 0.5, 0.75)}
+    className="bg-black-200 p-6 sm:p-10 rounded-3xl w-full border border-white/5 transition-[transform,border-color] duration-300 hover:-translate-y-1 hover:border-[#915eff]/30"
   >
     {/* Quote " */}
     <p className="text-white font-black text-[48px]">"</p>
 
     <div className="mt-1">
       {/* Testimonial */}
-      <p className="text-white tracking-wider text-[18px]">{testimonial}</p>
+      <p className="text-white tracking-wide text-[16px] sm:text-[18px] leading-relaxed">{testimonial}</p>
 
       <div className="mt-7 flex justify-between items-center gap-1">
         <div className="flex-1 flex flex-col">
@@ -77,7 +77,7 @@ export const Feedbacks = () => {
 
         {/* Feedback Card */}
         <div
-          className={cn(styles.paddingX, "-mt-20 pb-14 flex flex-wrap gap-7")}
+          className={cn(styles.paddingX, "-mt-20 pb-10 sm:pb-14 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-7")}
         >
           {ACHIEVEMENTS.map((achievement, i) => (
             <AchievementCard key={achievement.name} index={i} {...achievement} />

@@ -14,7 +14,7 @@ export const SectionWrapper = ({ children, idName }: SectionWrapperProps) => (
     variants={staggerContainer()}
     initial="hidden"
     whileInView="show"
-    viewport={{ once: true, amount: 0.25 }}
+    viewport={{ once: true, amount: 0.05, margin: "0px 0px -10% 0px" }}
     className={cn(styles.padding, "max-w-7xl mx-auto relative z-0")}
   >
     <span className="hash-span" id={idName}>

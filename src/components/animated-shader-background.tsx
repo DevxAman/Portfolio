@@ -99,8 +99,8 @@ void main(){gl_Position=position;}`;
         constructor(canvas: HTMLCanvasElement, scale: number) {
             this.canvas = canvas;
             this.scale = scale;
-            this.gl = canvas.getContext('webgl2')!;
-            this.gl.viewport(0, 0, canvas.width * scale, canvas.height * scale);
+            this.gl = canvas.getContext('webgl2', { antialias: false, powerPreference: 'high-performance' })!;
+            this.gl.viewport(0, 0, canvas.width, canvas.height);
             this.shaderSource = defaultShaderSource;
         }
 
@@ -129,7 +129,7 @@ void main(){gl_Position=position;}`;
 
         updateScale(scale: number) {
             this.scale = scale;
-            this.gl.viewport(0, 0, this.canvas.width * scale, this.canvas.height * scale);
+            this.gl.viewport(0, 0, this.canvas.width, this.canvas.height);
         }
 
         compile(shader: WebGLShader, source: string) {
@@ -299,22 +299,34 @@ void main(){gl_Position=position;}`;
         }
     }
 
+    // Lower internal resolution keeps this full-screen shader cheap (it is blurred-looking anyway)
+    const getScale = () => {
+        const small = window.innerWidth < 768;
+        return Math.min(window.devicePixelRatio || 1, 2) * (small ? 0.35 : 0.5);
+    };
+
     const resize = () => {
         if (!canvasRef.current) return;
 
         const canvas = canvasRef.current;
-        const dpr = Math.max(1, 0.5 * window.devicePixelRatio);
+        const scale = getScale();
+        const { width, height } = canvas.getBoundingClientRect();
 
-        canvas.width = window.innerWidth * dpr;
-        canvas.height = window.innerHeight * dpr;
+        canvas.width = Math.max(1, Math.floor(width * scale));
+        canvas.height = Math.max(1, Math.floor(height * scale));
 
         if (rendererRef.current) {
-            rendererRef.current.updateScale(dpr);
+            rendererRef.current.updateScale(1);
+        }
+        if (pointersRef.current) {
+            pointersRef.current.updateScale(scale);
         }
     };
 
+    const runningRef = useRef(false);
+
     const loop = (now: number) => {
-        if (!rendererRef.current || !pointersRef.current) return;
+        if (!rendererRef.current || !pointersRef.current || !runningRef.current) return;
 
         rendererRef.current.updateMouse(pointersRef.current.first);
         rendererRef.current.updatePointerCount(pointersRef.current.count);
@@ -328,10 +340,13 @@ void main(){gl_Position=position;}`;
         if (!canvasRef.current) return;
 
         const canvas = canvasRef.current;
-        const dpr = Math.max(1, 0.5 * window.devicePixelRatio);
+        if (!canvas.getContext('webgl2')) return;
 
-        rendererRef.current = new WebGLRenderer(canvas, dpr);
-        pointersRef.current = new PointerHandler(canvas, dpr);
+        const scale = getScale();
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        rendererRef.current = new WebGLRenderer(canvas, 1);
+        pointersRef.current = new PointerHandler(canvas, scale);
 
         rendererRef.current.setup();
         rendererRef.current.init();
@@ -342,15 +357,45 @@ void main(){gl_Position=position;}`;
             rendererRef.current.updateShader(defaultShaderSource);
         }
 
-        loop(0);
+        let visible = true;
+        const start = () => {
+            if (runningRef.current) return;
+            runningRef.current = true;
+            animationFrameRef.current = requestAnimationFrame(loop);
+        };
+        const stop = () => {
+            runningRef.current = false;
+            cancelAnimationFrame(animationFrameRef.current);
+        };
+        const sync = () => (visible && !document.hidden && !reduceMotion ? start() : stop());
 
-        window.addEventListener('resize', resize);
+        // Only animate while the hero is on screen and the tab is visible
+        const observer = new IntersectionObserver(([entry]) => {
+            visible = entry.isIntersecting;
+            sync();
+        });
+        observer.observe(canvas);
+        document.addEventListener('visibilitychange', sync);
+
+        if (reduceMotion) rendererRef.current.render(8000);
+        else start();
+
+        let resizeTimer = 0;
+        const onResize = () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = window.setTimeout(() => {
+                resize();
+                if (reduceMotion) rendererRef.current?.render(8000);
+            }, 150);
+        };
+        window.addEventListener('resize', onResize);
 
         return () => {
-            window.removeEventListener('resize', resize);
-            if (animationFrameRef.current) {
-                cancelAnimationFrame(animationFrameRef.current);
-            }
+            stop();
+            observer.disconnect();
+            clearTimeout(resizeTimer);
+            document.removeEventListener('visibilitychange', sync);
+            window.removeEventListener('resize', onResize);
             if (rendererRef.current) {
                 rendererRef.current.reset();
             }
@@ -366,7 +411,7 @@ export const AnimatedShaderBackground = () => {
     return (
         <canvas
             ref={canvasRef}
-            className="absolute inset-0 w-full h-full object-cover opacity-80 pointer-events-none"
+            className="absolute inset-0 w-full h-full opacity-80 pointer-events-none"
             style={{ mixBlendMode: 'screen', zIndex: 0 }}
         />
     );

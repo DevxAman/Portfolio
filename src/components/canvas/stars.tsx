@@ -5,11 +5,11 @@ import { useRef, Suspense, useState } from "react";
 import type { Points as PointsType } from "three";
 
 // Stars
-const Stars = (props: any) => {
+const Stars = ({ count }: { count: number }) => {
   const ref = useRef<PointsType | null>(null);
-  // For each star
-  const [sphere] = useState(() =>
-    random.inSphere(new Float32Array(6000), { radius: 1.2 }),
+  // For each star (x, y, z per point)
+  const [sphere] = useState(
+    () => random.inSphere(new Float32Array(count * 3), { radius: 1.2 }) as Float32Array,
   );
 
   // Rotate multiple stars
@@ -25,10 +25,9 @@ const Stars = (props: any) => {
       {/* Points */}
       <Points
         ref={ref}
-        positions={new Float32Array(sphere)}
+        positions={sphere}
         stride={3}
         frustumCulled
-        {...props}
       >
         {/* Each point material */}
         <PointMaterial
@@ -45,13 +44,19 @@ const Stars = (props: any) => {
 
 // Stars Canvas
 const StarsCanvas = () => {
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+
   return (
     <div className="w-full h-full fixed inset-0 z-[-1] pointer-events-none">
       {/* Canvas */}
-      <Canvas camera={{ position: [0, 0, 1] }}>
+      <Canvas
+        camera={{ position: [0, 0, 1] }}
+        dpr={[1, 1.5]}
+        gl={{ antialias: false, powerPreference: "high-performance" }}
+      >
         {/* Show stars if not fallback */}
         <Suspense fallback={null}>
-          <Stars />
+          <Stars count={isMobile ? 1200 : 2000} />
         </Suspense>
 
         {/* preload all */}

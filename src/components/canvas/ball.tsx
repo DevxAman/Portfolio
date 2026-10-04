@@ -50,7 +50,7 @@ type BallCanvasProps = {
 // Ball Canvas
 const BallCanvas = ({ icon }: BallCanvasProps) => {
   return (
-    <Canvas frameloop="demand" gl={{ preserveDrawingBuffer: true }}>
+    <Canvas frameloop="demand" dpr={[1, 1.5]} gl={{ antialias: true, powerPreference: "low-power" }}>
       {/* Show canvas loader on fallback */}
       <Suspense fallback={<CanvasLoader />}>
         <OrbitControls enableZoom={false} />

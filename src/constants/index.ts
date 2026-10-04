@@ -18,16 +18,12 @@ import {
   git,
   figma,
   docker,
-  plasmid,
   drdo,
-  technohacks,
   threejs,
   project1,
   project2,
-  project3,
-  project4,
+  infinitybox,
   project5,
-  project6,
   user1,
   user2,
   user3,
@@ -177,30 +173,6 @@ export const EXPERIENCES = [
       "Contributed to research resulting in an IEEE-indexed publication.",
     ],
   },
-  {
-    title: "Data Analytics Intern",
-    company_name: "TechnoHacks Solutions",
-    icon: technohacks,
-    iconBg: "#E6DEDD",
-    date: "November 2025 - December 2025",
-    points: [
-      "Analyzed multidimensional data sets to generate actionable business intelligence.",
-      "Created visualizations and predictive models to support tactical decision making.",
-      "Engineered automated data processing scripts for improved performance.",
-    ],
-  },
-  {
-    title: "Data Analytics & Software Intern",
-    company_name: "Plasmid",
-    icon: plasmid,
-    iconBg: "#383E56",
-    date: "May 2025 - July 2025",
-    points: [
-      "Developed scalable analytical tools to interpret complex operational metrics.",
-      "Optimized database queries and significantly improved data-retrieval times.",
-      "Integrated machine learning modules within existing corporate software architecture.",
-    ],
-  },
 ] as const;
 
 // Achievements
@@ -234,95 +206,7 @@ export const ACHIEVEMENTS = [
 // Projects
 export const PROJECTS = [
   {
-    name: "ClinicOS",
-    description:
-      "An AI-enabled clinical operations platform engineered to manage complex healthcare workflows and deliver intelligent analytical insights.",
-    tags: [
-      {
-        name: "react",
-        color: "blue-text-gradient",
-      },
-      {
-        name: "python",
-        color: "green-text-gradient",
-      },
-      {
-        name: "postgres",
-        color: "pink-text-gradient",
-      },
-    ],
-    image: project1,
-    source_code_link: "https://github.com/DevxAman/ClinicOS_AI_Clinical_Copilot",
-    live_site_link: "https://clinic-os-seven.vercel.app/",
-  },
-  {
-    name: "Punjabi Guard",
-    description:
-      "Advanced web platform acting as a digital information system focused on Punjabi community services and intelligent language processing.",
-    tags: [
-      {
-        name: "nextjs",
-        color: "blue-text-gradient",
-      },
-      {
-        name: "ml-models",
-        color: "green-text-gradient",
-      },
-      {
-        name: "tailwind",
-        color: "pink-text-gradient",
-      },
-    ],
-    image: project2,
-    source_code_link: "https://github.com/DevxAman/Punjabi_hate_remarks_detection",
-    live_site_link: "https://punjabi-guard.vercel.app/",
-  },
-  {
-    name: "Defence R&D System",
-    description:
-      "An analytical intelligence system managing and processing large-scale technical data for advanced defence research frameworks.",
-    tags: [
-      {
-        name: "data-engineering",
-        color: "blue-text-gradient",
-      },
-      {
-        name: "python",
-        color: "green-text-gradient",
-      },
-      {
-        name: "distributed-systems",
-        color: "pink-text-gradient",
-      },
-    ],
-    image: project3,
-    source_code_link: "https://github.com/DevxAman",
-    live_site_link: "#",
-  },
-  {
-    name: "OCR Document Extractor",
-    description:
-      "High-accuracy Natural Language Processing model extracting vital structured data from highly complex unstructured documentation arrays.",
-    tags: [
-      {
-        name: "nlp",
-        color: "blue-text-gradient",
-      },
-      {
-        name: "pytorch",
-        color: "green-text-gradient",
-      },
-      {
-        name: "aws",
-        color: "pink-text-gradient",
-      },
-    ],
-    image: project4,
-    source_code_link: "https://github.com/DevxAman",
-    live_site_link: "#",
-  },
-  {
-    name: "GNDEC Portal",
+    name: "GRP for GNDEC",
     description:
       "Robust grievance redressal engineering platform designed to handle significant user concurrency and secure public complaints safely.",
     tags: [
@@ -344,12 +228,56 @@ export const PROJECTS = [
     live_site_link: "#",
   },
   {
-    name: "AI Job Recommendation",
+    name: "Alfaaz AI",
     description:
-      "In-development machine learning pipeline identifying candidate fitness against industry vacancies utilizing advanced sentiment analysis variants.",
+      "Alfaaz is an AI platform using a fine-tuned MuRIL transformer to detect Punjabi toxicity, hate speech, and sarcasm.",
     tags: [
       {
-        name: "ml",
+        name: "nlp",
+        color: "blue-text-gradient",
+      },
+      {
+        name: "muril",
+        color: "green-text-gradient",
+      },
+      {
+        name: "transformers",
+        color: "pink-text-gradient",
+      },
+    ],
+    image: project2,
+    source_code_link: "https://github.com/DevxAman/Alfaaz-AI",
+    live_site_link: "https://alfaaz-ai.vercel.app/",
+  },
+  {
+    name: "InfinityBox",
+    description:
+      "InfinityBox is an all-in-one cinematic hub that lets you stream movie trailers, book cinema tickets seamlessly, and curate personalized watchlists to easily organize what to watch and what to skip.",
+    tags: [
+      {
+        name: "nextjs",
+        color: "blue-text-gradient",
+      },
+      {
+        name: "typescript",
+        color: "green-text-gradient",
+      },
+      {
+        name: "supabase",
+        color: "pink-text-gradient",
+      },
+    ],
+    image: infinitybox,
+    source_code_link: "https://github.com/DevxAman/Infinity_Box",
+    live_site_link: "https://infinity-box-ashy.vercel.app/",
+  },
+  {
+    name: "ClinicOS",
+    description:
+      "An AI-enabled clinical operations platform engineered to manage complex healthcare workflows and deliver intelligent analytical insights.",
+    tags: [
+      {
+        name: "react",
         color: "blue-text-gradient",
       },
       {
@@ -357,13 +285,13 @@ export const PROJECTS = [
         color: "green-text-gradient",
       },
       {
-        name: "docker",
+        name: "postgres",
         color: "pink-text-gradient",
       },
     ],
-    image: project6,
-    source_code_link: "https://github.com/DevxAman",
-    live_site_link: "#",
+    image: project1,
+    source_code_link: "https://github.com/DevxAman/ClinicOS_AI_Clinical_Copilot",
+    live_site_link: "https://clinic-os-seven.vercel.app/",
   },
 ] as const;
 
@@ -373,7 +301,7 @@ export const EDUCATION = [
     institution: "Guru Nanak Dev Engineering College (GNDEC), Ludhiana",
     degree: "B.Tech — Computer Science & Engineering",
     years: "2022 – 2026",
-    gpa: "8.5/10",
+    gpa: "7.43/10",
   },
   {
     institution: "Akal Academy Jand Sahib, Faridkot, Punjab",
@@ -440,8 +368,6 @@ export const TIMELINE = [
   // { year: "2024", event: "Built ML Projects including Fraud Detection, Spam Classifier, Sentiment Analysis" },
   { year: "2024", event: "Data Science Intern — Bharat Intern" },
   { year: "2024", event: "Data Science Intern — CodeAlpha" },
-  { year: "2025", event: "Data Analytics & Software Intern — Plasmid" },
-  { year: "2025", event: "Data Analytics Intern — TechnoHacks Solutions" },
   { year: "2025", event: "AI / Data Systems Intern — DRDO Headquarters (Ministry of Defence)" },
   { year: "2025", event: "Developed analytical systems processing 3000+ defence R&D datasets" },
   { year: "2025", event: "IEEE Research Publication — IC2SDT (NIT Delhi)" },

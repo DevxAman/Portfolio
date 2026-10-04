@@ -17,10 +17,10 @@ export const Education = () => {
                     {EDUCATION.map((edu, index) => (
                         <motion.div
                             key={index}
-                            variants={fadeIn("up", "spring", index * 0.5, 0.75)}
-                            className="bg-[#1d1836] p-8 rounded-2xl w-full border border-white/10"
+                            variants={fadeIn("up", "tween", index * 0.5, 0.75)}
+                            className="bg-[#1d1836] p-5 sm:p-8 rounded-2xl w-full border border-white/10 transition-colors duration-300 hover:border-[#915eff]/40"
                         >
-                            <h3 className="text-white text-[24px] font-bold">{edu.degree}</h3>
+                            <h3 className="text-white text-[19px] sm:text-[24px] font-bold leading-snug">{edu.degree}</h3>
                             <p className="text-secondary text-[16px] font-semibold mt-2">
                                 {edu.institution}
                             </p>
@@ -29,7 +29,7 @@ export const Education = () => {
                             </p>
                             {("gpa" in edu || "percentage" in edu) && (
                                 <p className="text-white text-[14px] font-medium mt-2">
-                                    Grade: {typeof edu !== 'string' && 'gpa' in edu ? (edu as any).gpa : ('percentage' in edu ? (edu as any).percentage : '')}
+                                    {"gpa" in edu ? "CGPA" : "Grade"}: {typeof edu !== 'string' && 'gpa' in edu ? (edu as any).gpa : ('percentage' in edu ? (edu as any).percentage : '')}
                                 </p>
                             )}
                         </motion.div>

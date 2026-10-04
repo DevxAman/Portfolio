@@ -33,11 +33,11 @@ export const Hero = () => {
   }, [titleNumber, titles]);
 
   return (
-    <section className="relative w-full h-screen mx-auto flex flex-col justify-center items-center">
+    <section className="relative w-full min-h-[100svh] mx-auto flex flex-col justify-center items-center overflow-hidden">
       <div
         className={cn(
           styles.paddingX,
-          "max-w-7xl mx-auto flex flex-col items-center justify-center gap-5 text-center z-10 -mt-20",
+          "max-w-7xl mx-auto flex flex-col items-center justify-center gap-4 sm:gap-5 text-center z-10 -mt-10 sm:-mt-20",
         )}
       >
         {/* Title Indicator */}
@@ -48,16 +48,23 @@ export const Hero = () => {
 
         {/* About Me Text */}
         <div>
-          <h1 className={cn(styles.heroHeadText, "text-white flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4")}>
-            <span>Hi, I'm</span>
-            <span className="relative flex justify-center sm:justify-start overflow-hidden">
-              <span className="opacity-0 pointer-events-none">Amandeep Singh</span>
+          <h1 className={cn(styles.heroHeadText, "text-white flex flex-col xl:flex-row items-center justify-center gap-1 xl:gap-4")}>
+            <span className="whitespace-nowrap">Hi, I'm</span>
+            <span className="relative flex min-w-0 max-w-full justify-center xl:justify-start overflow-hidden">
+              {/* Invisible sizer: all titles stacked in one grid cell, so the slot fits the widest */}
+              <span className="grid opacity-0 pointer-events-none" aria-hidden>
+                {titles.map((title) => (
+                  <span key={title} className="col-start-1 row-start-1 whitespace-nowrap">
+                    {title}
+                  </span>
+                ))}
+              </span>
               {titles.map((title, index) => (
                 <motion.span
                   key={index}
-                  className="absolute left-0 top-0 font-bold text-white whitespace-nowrap w-full text-center sm:text-left"
+                  className="absolute left-0 top-0 w-full font-bold text-white whitespace-nowrap text-center xl:text-left"
                   initial={{ opacity: 0, y: "-100%" }}
-                  transition={{ type: "spring", stiffness: 50 }}
+                  transition={{ type: "spring", stiffness: 120, damping: 20 }}
                   animate={
                     titleNumber === index
                       ? { y: 0, opacity: 1 }
@@ -69,7 +76,7 @@ export const Hero = () => {
               ))}
             </span>
           </h1>
-          <p className={cn(styles.heroSubText, "mt-4 text-white-100 max-w-3xl mx-auto leading-relaxed")}>
+          <p className={cn(styles.heroSubText, "mt-4 text-white-100 max-w-3xl mx-auto")}>
             AI & Data Systems Engineer building intelligent architectures, scalable web apps, and machine learning models.
           </p>
         </div>
@@ -79,6 +86,28 @@ export const Hero = () => {
       <div className="absolute inset-0 z-0 flex justify-center items-center overflow-hidden mix-blend-screen">
         <AnimatedShaderBackground />
       </div>
+
+      {/* Scroll cue: a quiet chevron that gently breathes */}
+      <a
+        href="#about"
+        aria-label="Scroll to about section"
+        className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 z-20 p-3 text-white/40 hover:text-white/80 transition-colors duration-300"
+      >
+        <motion.svg
+          width="22"
+          height="22"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          animate={{ y: [0, 4, 0], opacity: [0.6, 1, 0.6] }}
+          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <path d="M6 9l6 6 6-6" />
+        </motion.svg>
+      </a>
 
       {/* Fade to bottom */}
       <div className="absolute bottom-0 w-full h-40 bg-gradient-to-t from-primary to-transparent z-10 pointer-events-none" />

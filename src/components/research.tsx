@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Tilt } from "react-tilt";
+import { SmoothTilt } from "./ui/smooth-tilt";
 import { SectionWrapper } from "../hoc";
 import { styles } from "../styles";
 import { fadeIn, textVariant } from "../utils/motion";
@@ -14,16 +14,16 @@ export const Research = () => {
                     <h2 className={styles.sectionHeadText}>Research & Publications.</h2>
                 </motion.div>
 
-                <div className="mt-14 flex flex-wrap gap-7">
+                <div className="mt-10 sm:mt-14 grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-7">
                     {RESEARCH.map((pub, index) => (
                         <motion.div
                             key={index}
-                            variants={fadeIn("up", "spring", index * 0.5, 0.75)}
-                            className="w-full lg:w-[48%] flex"
+                            variants={fadeIn("up", "tween", index * 0.5, 0.75)}
+                            className="w-full flex"
                         >
-                            <Tilt
-                                options={{ max: 15, scale: 1.02, speed: 400 }}
-                                className="w-full border border-[#915eff] bg-[#1d1836] rounded-2xl p-6 flex flex-col justify-between"
+                            <SmoothTilt
+                                max={8}
+                                className="w-full border border-[#915eff]/60 hover:border-[#915eff] transition-colors duration-300 bg-[#1d1836] rounded-2xl p-5 sm:p-6 flex flex-col justify-between"
                             >
                                 <div>
                                     <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
@@ -75,7 +75,7 @@ export const Research = () => {
                                         </a>
                                     )}
                                 </div>
-                            </Tilt>
+                            </SmoothTilt>
                         </motion.div>
                     ))}
                 </div>

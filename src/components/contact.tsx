@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import { EarthCanvas } from "./canvas";
 import { SectionWrapper } from "../hoc";
 import { styles } from "../styles";
+import { useInView } from "../utils/hooks";
 import { slideIn } from "../utils/motion";
 
 // Contact
@@ -17,6 +18,8 @@ export const Contact = () => {
     message: "",
   });
   const [loading, setLoading] = useState(false);
+  // Load the 3D earth (≈3MB model) only when the contact section is close
+  const [earthRef, showEarth] = useInView<HTMLDivElement>("300px");
 
   // handle form change
   const handleChange = (
@@ -128,7 +131,7 @@ export const Contact = () => {
       <div className="xl:mt-12 xl:flex-row flex-col-reverse flex gap-10">
         <motion.div
           variants={slideIn("left", "tween", 0.2, 1)}
-          className="flex-[0.75] bg-black-100 p-8 rounded-2xl"
+          className="flex-[0.75] bg-black-100 p-5 xs:p-6 sm:p-8 rounded-2xl border border-white/5"
         >
           {/* Title */}
           <p className={styles.sectionSubText}>Get in touch</p>
@@ -138,7 +141,7 @@ export const Contact = () => {
           <form
             ref={formRef}
             onSubmit={handleSubmit}
-            className="mt-12 flex flex-col gap-8"
+            className="mt-8 sm:mt-12 flex flex-col gap-6 sm:gap-8"
           >
             {/* Name */}
             <label htmlFor="name" className="flex flex-col">
@@ -153,7 +156,7 @@ export const Contact = () => {
                 title="What's your name?"
                 disabled={loading}
                 aria-disabled={loading}
-                className="bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outline-none border-none font-medium disabled:bg-tertiary/20 disabled:text-white/60"
+                className="bg-tertiary py-3.5 sm:py-4 px-4 sm:px-6 placeholder:text-secondary text-white rounded-lg outline-none border border-transparent font-medium transition-[border-color,box-shadow] duration-200 focus:border-[#915eff]/70 focus:shadow-[0_0_0_4px_rgba(145,94,255,0.15)] disabled:bg-tertiary/20 disabled:text-white/60"
               />
 
               {/* Invalid Name */}
@@ -175,7 +178,7 @@ export const Contact = () => {
                 title="What's your email?"
                 disabled={loading}
                 aria-disabled={loading}
-                className="bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outline-none border-none font-medium disabled:bg-tertiary/20 disabled:text-white/60"
+                className="bg-tertiary py-3.5 sm:py-4 px-4 sm:px-6 placeholder:text-secondary text-white rounded-lg outline-none border border-transparent font-medium transition-[border-color,box-shadow] duration-200 focus:border-[#915eff]/70 focus:shadow-[0_0_0_4px_rgba(145,94,255,0.15)] disabled:bg-tertiary/20 disabled:text-white/60"
               />
 
               {/* Invalid Email */}
@@ -197,7 +200,7 @@ export const Contact = () => {
                 title="What do you want to say?"
                 disabled={loading}
                 aria-disabled={loading}
-                className="bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outline-none border-none font-medium disabled:bg-tertiary/20 disabled:text-white/60 disabled:resize-none"
+                className="bg-tertiary py-3.5 sm:py-4 px-4 sm:px-6 placeholder:text-secondary text-white rounded-lg outline-none border border-transparent font-medium transition-[border-color,box-shadow] duration-200 focus:border-[#915eff]/70 focus:shadow-[0_0_0_4px_rgba(145,94,255,0.15)] disabled:bg-tertiary/20 disabled:text-white/60 disabled:resize-none"
               />
 
               {/* Invalid Message */}
@@ -210,7 +213,7 @@ export const Contact = () => {
             <button
               type="submit"
               title={loading ? "Sending..." : "Send"}
-              className="bg-tertiary py-3 px-8 outline-none w-fit text-white font-bold shadow-md shadow-primary rounded-xl disabled:bg-tertiary/20 disabled:text-white/60"
+              className="bg-[#915eff] hover:bg-[#7c4ae6] active:scale-[0.98] py-3 px-8 outline-none w-full xs:w-fit text-white font-bold shadow-lg shadow-[#915eff]/20 rounded-xl transition-[background-color,transform] duration-200 focus-visible:ring-2 focus-visible:ring-white/60 disabled:bg-tertiary/20 disabled:text-white/60 disabled:shadow-none"
               disabled={loading}
               aria-disabled={loading}
             >
@@ -223,9 +226,11 @@ export const Contact = () => {
         {/* Earth Model */}
         <motion.div
           variants={slideIn("right", "tween", 0.2, 1)}
-          className="xl:flex-1 xl:h-auto md:h-[550px] h-[350px]"
+          className="xl:flex-1 xl:h-auto md:h-[550px] h-[300px]"
         >
-          <EarthCanvas />
+          <div ref={earthRef} className="w-full h-full">
+            {showEarth && <EarthCanvas />}
+          </div>
         </motion.div>
       </div>
     </SectionWrapper>

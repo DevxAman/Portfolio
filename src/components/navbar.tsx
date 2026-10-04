@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 
 import { logo, menu, close } from "../assets";
 import { NAV_LINKS } from "../constants";
@@ -17,53 +17,74 @@ export const Navbar = ({ hide }: NavbarProps) => {
   const [active, setActive] = useState("");
   const [toggle, setToggle] = useState(false);
   const [isAtBottom, setIsAtBottom] = useState(false);
+  const menuRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 10) {
-        setIsAtBottom(true);
-      } else {
-        setIsAtBottom(false);
-      }
+    let frame = 0;
 
-      // Scroll Spy Logic
+    const update = () => {
+      frame = 0;
       const scrollPosition = window.scrollY;
-      
+      setIsAtBottom(scrollPosition > 10);
+
       // Reset active when at the very top (Hero section)
       if (scrollPosition < 200) {
         setActive("");
         return;
       }
 
+      // Scroll Spy: last section whose top has passed the upper part of the viewport
       for (let i = NAV_LINKS.length - 1; i >= 0; i--) {
         const link = NAV_LINKS[i];
-        if (!link.link) {
-          const section = document.getElementById(link.id);
-          if (section) {
-            const rect = section.getBoundingClientRect();
-            // If the section's top is within the upper part of the viewport
-            if (rect.top <= 300) {
-              if (active !== link.title) {
-                setActive(link.title);
-              }
-              break;
-            }
-          }
+        if (link.link) continue;
+        const section = document.getElementById(link.id);
+        if (section && section.getBoundingClientRect().top <= 300) {
+          setActive(link.title);
+          break;
         }
       }
     };
 
+    // Batch scroll work into one update per animation frame
+    const handleScroll = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+
+    update();
     window.addEventListener("scroll", handleScroll, { passive: true });
 
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [active]);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      cancelAnimationFrame(frame);
+    };
+  }, []);
+
+  // Close mobile menu on Escape, outside tap, or when resizing up to desktop
+  useEffect(() => {
+    if (!toggle) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setToggle(false);
+    const onResize = () => window.innerWidth >= 1280 && setToggle(false);
+    const onPointer = (e: PointerEvent) => {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) setToggle(false);
+    };
+    window.addEventListener("keydown", onKey);
+    document.addEventListener("pointerdown", onPointer);
+    window.addEventListener("resize", onResize);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.removeEventListener("pointerdown", onPointer);
+      window.removeEventListener("resize", onResize);
+    };
+  }, [toggle]);
 
   return (
     <nav
       className={cn(
         styles.paddingX,
-        "w-full flex items-center py-5 fixed top-0 z-50 transition-all duration-300",
-        isAtBottom ? "bg-primary/90 backdrop-blur-md" : "bg-transparent",
+        "w-full flex items-center fixed top-0 z-50 transition-[background-color,padding,margin,box-shadow] duration-300",
+        isAtBottom
+          ? "py-3 bg-primary/85 backdrop-blur-md shadow-[0_1px_0_rgba(255,255,255,0.06)]"
+          : "py-5 bg-transparent",
         isAtBottom || hide ? "mt-0" : "mt-20"
       )}
     >
@@ -77,14 +98,14 @@ export const Navbar = ({ hide }: NavbarProps) => {
             window.scrollTo(0, 0);
           }}
         >
-          <img src={logo} alt="Logo" className="w-10 h-10 object-contain bg-white rounded-full p-1" />
-          <p className="text-white text-[18px] font-bold cursor-pointer flex">
+          <img src={logo} alt="Logo" className="w-9 h-9 sm:w-10 sm:h-10 object-contain bg-white rounded-full p-1" />
+          <p className="text-white text-[16px] sm:text-[18px] font-bold cursor-pointer flex whitespace-nowrap">
             Amandeep Singh
           </p>
         </Link>
 
         {/* Nav Links (Desktop) */}
-        <ul className="list-none hidden lg:flex flex-row gap-2">
+        <ul className="list-none hidden xl:flex flex-row gap-1">
           {NAV_LINKS.map((link) => {
             const isActive = active === link.title;
             return (
@@ -92,7 +113,7 @@ export const Navbar = ({ hide }: NavbarProps) => {
                 key={link.id}
                 className={cn(
                   isActive ? "text-white" : "text-secondary",
-                  "relative hover:text-white text-[16px] font-medium cursor-pointer px-4 py-2 rounded-full transition-colors"
+                  "relative hover:text-white text-[15px] 2xl:text-[16px] font-medium cursor-pointer px-3 2xl:px-4 py-2 rounded-full whitespace-nowrap transition-colors"
                 )}
                 onClick={() => !link.link && setActive(link.title)}
               >
@@ -127,49 +148,53 @@ export const Navbar = ({ hide }: NavbarProps) => {
         </ul>
 
         {/* Hamburger Menu (Mobile) */}
-        <div className="lg:hidden flex flex-1 justify-end items-center">
-          <img
-            src={toggle ? close : menu}
-            alt="Menu"
-            className="w-[28px] h-[28px] object-contain cursor-pointer"
+        <div ref={menuRef} className="xl:hidden flex flex-1 justify-end items-center">
+          <button
+            type="button"
+            aria-label={toggle ? "Close menu" : "Open menu"}
+            aria-expanded={toggle}
             onClick={() => setToggle(!toggle)}
-          />
-
-          <div
-            className={cn(
-              !toggle ? "hidden" : "flex",
-              "p-6 black-gradient absolute top-20 right-0 mx-4 my-2 min-w-[140px] z-10 rounded-xl"
-            )}
+            className="p-2 -mr-2 rounded-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#915eff]"
           >
-            {/* Nav Links (Mobile) */}
-            <ul className="list-none flex justify-end items-start flex-col gap-4">
-              {NAV_LINKS.map((link) => (
-                <li
-                  key={link.id}
-                  className={cn(
-                    active === link.title ? "text-white" : "text-secondary",
-                    "font-poppins font-medium cursor-pointer text-[16px]"
-                  )}
-                  onClick={() => {
-                    !link.link && setToggle(!toggle);
-                    !link.link && setActive(link.title);
-                  }}
+            <img src={toggle ? close : menu} alt="" className="w-[26px] h-[26px] object-contain" />
+          </button>
+
+          <AnimatePresence>
+            {toggle && (
+                <motion.div
+                  initial={{ opacity: 0, y: -8, scale: 0.97 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -8, scale: 0.97 }}
+                  transition={{ duration: 0.18, ease: "easeOut" }}
+                  className="p-5 black-gradient absolute top-full right-0 mx-4 mt-2 min-w-[200px] z-10 rounded-xl border border-white/10 shadow-2xl origin-top-right"
                 >
-                  {link.link ? (
-                    <a
-                      href={link.link}
-                      target="_blank"
-                      rel="noreferrer noopener"
-                    >
-                      {link.title}
-                    </a>
-                  ) : (
-                    <a href={`#${link.id}`}>{link.title}</a>
-                  )}
-                </li>
-              ))}
-            </ul>
-          </div>
+                  {/* Nav Links (Mobile) */}
+                  <ul className="list-none flex justify-end items-stretch flex-col gap-1">
+                    {NAV_LINKS.map((link) => (
+                      <li
+                        key={link.id}
+                        className={cn(
+                          active === link.title ? "text-white bg-white/5" : "text-secondary",
+                          "font-poppins font-medium text-[16px] rounded-lg hover:text-white transition-colors"
+                        )}
+                        onClick={() => {
+                          setToggle(false);
+                          !link.link && setActive(link.title);
+                        }}
+                      >
+                        {link.link ? (
+                          <a className="block px-3 py-2.5" href={link.link} target="_blank" rel="noreferrer noopener">
+                            {link.title}
+                          </a>
+                        ) : (
+                          <a className="block px-3 py-2.5" href={`#${link.id}`}>{link.title}</a>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
     </nav>
